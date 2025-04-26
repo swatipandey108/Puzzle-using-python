@@ -1,0 +1,222 @@
+Importing Modules
+python
+Copy
+Edit
+import random
+import time
+from tkinter import *
+random: Provides functions to generate random numbers, used here to shuffle the puzzle pieces.
+
+time: This module is imported but not used directly in the code. It could be useful for implementing delays or tracking time in future modifications.
+
+tkinter: This is the standard Python interface for creating GUI applications. We import everything from tkinter to create windows, frames, labels, buttons, etc.
+
+Root Window Setup
+python
+Copy
+Edit
+root = Tk()
+root.geometry("1350x750+0+0")
+root.title("Puzzle Game")
+root.configure(background="Cadet Blue")
+root = Tk(): Creates the main window of the application.
+
+root.geometry("1350x750+0+0"): Defines the size of the window (1350 pixels wide, 750 pixels tall) and positions it at the top-left corner of the screen (+0+0).
+
+root.title("Puzzle Game"): Sets the title of the window to "Puzzle Game".
+
+root.configure(background="Cadet Blue"): Changes the background color of the window to "Cadet Blue".
+
+Top Frame (Title Bar)
+python
+Copy
+Edit
+Tops = Frame(root, bg="Cadet Blue", pady=2, width=1350, height=100, relief=RIDGE)
+Tops.grid(row=0, column=0)
+Tops: This is a Frame widget that will contain the title of the game. It has:
+
+Background color Cadet Blue.
+
+Vertical padding of 2 pixels (pady=2).
+
+A width of 1350 pixels and height of 100 pixels.
+
+A border with a RIDGE effect, which adds a raised edge around the frame.
+
+Tops.grid(row=0, column=0): Uses the grid() geometry manager to place this frame in row 0, column 0 of the main window.
+
+Title Label
+python
+Copy
+Edit
+lblTitle = Label(Tops, font=('arial', 80, 'bold'), text="Advanced Puzzle Game", bd=10, bg="Cadet Blue", fg='Cornsilk', justify=CENTER)
+lblTitle.grid(row=0, column=0)
+lblTitle: Creates a label widget for the title of the game.
+
+Font: Uses the Arial font with size 80 and bold weight.
+
+Text: Sets the label text to "Advanced Puzzle Game".
+
+Border (bd): Adds a border of 10 pixels around the label.
+
+Background (bg): Sets the background color to "Cadet Blue".
+
+Foreground (fg): Sets the text color to "Cornsilk".
+
+Justify: Centers the text.
+
+lblTitle.grid(row=0, column=0): Places the label in row 0, column 0 of the Tops frame.
+
+Main Frame (Game Area)
+python
+Copy
+Edit
+MainFrame = Frame(root, bg="Powder Blue", bd=10, width=1350, height=700, relief=RIDGE)
+MainFrame.grid(row=1, column=0, padx=30)
+MainFrame: This frame will hold the left and right sections of the game.
+
+Background color (bg): Set to "Powder Blue".
+
+Border (bd): Border width of 10 pixels.
+
+Width and height: Set to 1350 pixels by 700 pixels.
+
+Relief (relief): Adds a border effect with RIDGE appearance.
+
+MainFrame.grid(row=1, column=0, padx=30): Places this frame at row 1, column 0 of the main window and adds horizontal padding of 30 pixels.
+
+Left Frame (Puzzle Buttons)
+python
+Copy
+Edit
+LeftFrame = Frame(MainFrame, bd=10, width=700, height=500, pady=2, bg="Cadet Blue", relief=RIDGE)
+LeftFrame.pack(side=LEFT)
+LeftFrame: This frame holds the buttons of the puzzle.
+
+Border (bd): Border width of 10 pixels.
+
+Size: Width 700 pixels and height 500 pixels.
+
+Padding (pady): Adds vertical padding inside the frame.
+
+Background color (bg): Set to "Cadet Blue".
+
+Relief (relief): Adds a RIDGE effect to the border.
+
+LeftFrame.pack(side=LEFT): Places the LeftFrame on the left side of MainFrame using the pack() method.
+
+Right Frame (Game Controls and Stats)
+python
+Copy
+Edit
+RightFrame = Frame(MainFrame, bd=10, width=540, height=500, padx=1, pady=2, bg="Cadet Blue", relief=RIDGE)
+RightFrame.pack(side=RIGHT)
+RightFrame: This frame holds the controls and stats (like the number of clicks and game status).
+
+Border (bd): Border width of 10 pixels.
+
+Size: Width 540 pixels, height 500 pixels.
+
+Padding (padx, pady): Adds horizontal and vertical padding.
+
+Background color (bg): Set to "Cadet Blue".
+
+Relief (relief): Adds a RIDGE border effect.
+
+RightFrame.pack(side=RIGHT): Places the RightFrame on the right side of MainFrame.
+
+Right Frame Subsections
+These sections are used to show the number of clicks, the new game button, and the game state message.
+
+Click Display Frame
+python
+Copy
+Edit
+RightFrame1 = Frame(RightFrame, bd=10, width=540, height=200, padx=10, pady=2, bg="Cadet Blue", relief=RIDGE)
+RightFrame1.grid(row=0, column=0)
+RightFrame1: Holds the display for the number of clicks.
+
+Position: Placed in row 0, column 0 of RightFrame.
+
+New Game Button
+python
+Copy
+Edit
+RightFrame2a = Frame(RightFrame, bd=10, width=540, height=140, padx=10, pady=2, bg="Cadet Blue", relief=RIDGE)
+RightFrame2a.grid(row=1, column=0)
+RightFrame2a: Holds the "New Game" button.
+
+Position: Placed in row 1, column 0 of RightFrame.
+
+Game State Message
+python
+Copy
+Edit
+RightFrame2b = Frame(RightFrame, bd=10, width=540, height=140, padx=10, pady=2, bg="Cadet Blue", relief=RIDGE)
+RightFrame2b.grid(row=2, column=0)
+RightFrame2b: Holds the game state message (like "You are a Winner!").
+
+Position: Placed in row 2, column 0 of RightFrame.
+
+Game Variables and Functions
+python
+Copy
+Edit
+numberOfClicks = 0
+displayClicks = StringVar()
+displayClicks.set("Number of Clicks" + "\n" + "0")
+numberOfClicks: A variable to track how many moves the player has made.
+
+displayClicks: A StringVar that stores and updates the text showing the number of clicks. It's linked to the label displaying the click count.
+
+shuffle() Function
+python
+Copy
+Edit
+def shuffle():
+    global btnNumbers, numberOfClicks
+    nums = []
+    for x in range(12):
+        x += 1
+        if x == 12:
+            nums.append("")
+        else:
+            nums.append(str(x))
+
+    for y in range(len(btnNumbers)):
+        for x in range(len(btnNumbers[y])):
+            num = random.choice(nums)
+            btnNumbers[y][x].textTaken.set(num)
+            nums.remove(num)
+    numberOfClicks = 0
+    upDateCounter()
+    gameStateUpdate("")
+shuffle(): Randomly shuffles the numbers in the puzzle, excluding the empty spot ("").
+
+It creates a list of numbers from 1 to 11 and an empty spot.
+
+It randomly assigns each number to a button and removes it from the list to avoid duplicates.
+
+Button Class
+python
+Copy
+Edit
+class Button_:
+    def __init__(self, text, x, y):
+        self.enterValue = text
+        self.textTaken = StringVar()
+        self.textTaken.set(text)
+        self.x = x
+        self.y = y
+        self.btnNumber = Button(LeftFrame, textvariable=self.textTaken, font=('arial', 80), bd=3,
+                                command=lambda i=self.x, j=self.y: emptySpotChecker(i, j))
+        self.btnNumber.place(x=self.x * 150, y=self.y * 150, width=170, height=170)
+Button_: Defines the behavior of each puzzle piece button.
+
+text: The number or empty value displayed on the button.
+
+textTaken: A StringVar linked to the button text.
+
+x and y: The position of the button on the grid.
+
+btnNumber: Creates the actual button widget with specified font, border, and command.
