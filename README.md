@@ -1,4 +1,4 @@
-Advanced Puzzle Game 🧩
+Advanced Puzzle Game 🧩  
 This is a simple sliding puzzle game built using Python and Tkinter.
 The goal is to rearrange the shuffled numbers into their correct order with the minimum number of moves.
 
@@ -33,5 +33,7 @@ Edit
 python filename.py
 Requirements
 Python Standard Library (tkinter, random, time)
-![Screenshot (108)](https://github.com/user-attachments/assets/a6fe2dd3-d98f-41b2-9eed-733467265cc8)
+
 ![Screenshot (107)](https://github.com/user-attachments/assets/11ff18ba-57cd-4a65-93fd-31456af31574)
+
+![Screenshot (108)](https://github.com/user-attachments/assets/a6fe2dd3-d98f-41b2-9eed-733467265cc8)
